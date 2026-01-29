@@ -42,7 +42,7 @@ namespace Clock
 			checkBoxShowWeekday.Visible = visible;
 			buttonHideControls.Visible = visible;
 			this.ShowInTaskbar = visible;
-			this.FormBorderStyle =visible ? FormBorderStyle : FormBorderStyle.None;
+			this.FormBorderStyle =visible ? FormBorderStyle.FixedToolWindow : FormBorderStyle.None;
 			this.TransparencyKey = visible ? Color. Empty : this.BackColor;
 
 		}
@@ -55,6 +55,11 @@ namespace Clock
 		{
 
 			SetVisibility(true);
+		}
+
+		private void showWeekToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
