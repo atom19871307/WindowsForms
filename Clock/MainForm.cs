@@ -61,5 +61,10 @@ namespace Clock
 		{
 
 		}
+
+		private void labelTime_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }
