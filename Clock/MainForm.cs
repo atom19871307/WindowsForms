@@ -12,16 +12,19 @@ namespace Clock
 {
 	public partial class MainForm : Form
 	{
+		ColorDialog backgroundDialog;
+		ColorDialog foregroundDialog;
 		public MainForm()
 		{
 			InitializeComponent();
-			this.StartPosition = FormStartPosition.Manual;
 			this.Location = new Point
 				(
 					Screen.PrimaryScreen.Bounds.Width - this.Width - 50,
 					50
 				);
 			tsimShowControls.Checked = true;
+			backgroundDialog = new ColorDialog();
+			foregroundDialog = new ColorDialog();
 		}
 
 		private void timer_Tick(object sender, EventArgs e)
@@ -43,25 +46,24 @@ namespace Clock
 			checkBoxShowWeekday.Visible = visible;
 			buttonHideControls.Visible = visible;
 			this.ShowInTaskbar = visible;
-			this.FormBorderStyle =visible ? FormBorderStyle.FixedToolWindow : FormBorderStyle.None;
-			this.TransparencyKey = visible ? Color. Empty : this.BackColor;
+			this.FormBorderStyle = visible ? FormBorderStyle.FixedToolWindow : FormBorderStyle.None;
+			this.TransparencyKey = visible ? Color.Empty : this.BackColor;
 		}
-		private void buttonHideControls_Click(object sender, EventArgs e) => tsimShowControls.Checked=false;
-		private void labelTime_DoubleClick(object sender, EventArgs e) => tsimShowControls.Checked =true;
+
+		private void buttonHideControls_Click(object sender, EventArgs e) => tsimShowControls.Checked = false;
+		private void labelTime_DoubleClick(object sender, EventArgs e) => tsimShowControls.Checked = true;
 
 		private void tsmiTopmost_CheckedChanged(object sender, EventArgs e) =>
 			//this.TopMost = tsmiTopmost.Checked;
 			//this.TopMost = ((ToolStripMenuItem)sender).Checked;
 			this.TopMost = (sender as ToolStripMenuItem).Checked;
 
-		private void tsimShowControls_CheckedChanged(object sender, EventArgs e) =>SetVisibility(tsimShowControls.Checked);
-
-		
+		private void tsimShowControls_CheckedChanged(object sender, EventArgs e) => SetVisibility(tsimShowControls.Checked);
 		private void tsmiExit_Click(object sender, EventArgs e) => this.Close();
 
-		private void notifyIcon_DoubleClick(object sender, EventArgs e)
+		private void notifyIcon_MouseDoubleClick(object sender, EventArgs e)
 		{
-			if(this.TopMost)
+			if (this.TopMost)
 			{
 				this.TopMost = true;
 				this.TopMost = false;
@@ -78,6 +80,21 @@ namespace Clock
 			checkBoxShowDate.Checked = (sender as ToolStripMenuItem).Checked;
 
 		private void tsimShowWeekday_CheckedChanged(object sender, EventArgs e) =>
-			checkBoxShowWeekday.Checked = ( sender as ToolStripMenuItem).Checked;
+			checkBoxShowWeekday.Checked = (sender as ToolStripMenuItem).Checked;
+
+		private void tsmiBackgroundColor_Click(object sender, EventArgs e)
+		{
+			DialogResult result = backgroundDialog.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				labelTime.BackColor = backgroundDialog.Color;
+			}
+		}
+
+		private void tsmiForegroundColor_Click(object sender, EventArgs e)
+		{
+			if (foregroundDialog.ShowDialog() == DialogResult.OK)
+				labelTime.ForeColor = foregroundDialog.Color;
+		}
 	}
 }
