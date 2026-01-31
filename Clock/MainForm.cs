@@ -15,6 +15,9 @@ namespace Clock
 		public MainForm()
 		{
 			InitializeComponent();
+			//*********************************************************
+			this.DoubleBuffered = true;
+			//********************************************************
 			this.StartPosition = FormStartPosition.Manual;
 			this.Location = new Point
 				(
@@ -57,14 +60,82 @@ namespace Clock
 			SetVisibility(true);
 		}
 
-		private void showWeekToolStripMenuItem_Click(object sender, EventArgs e)
+		private void showWeekdayToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			//////////////////////////////////////////////////////////
+			if (sender is ToolStripMenuItem item)
+			{
+				checkBoxShowWeekday.Checked = item.Checked;
+			}
+			///////////////////////////////////////////////////////////////
 		}
 
 		private void labelTime_Click(object sender, EventArgs e)
 		{
 
 		}
+
+		private void contextMenuStrip_Opening(object sender, CancelEventArgs e)
+		{
+
+		}
+
+		private void tsmiTopmost_Click(object sender, EventArgs e)
+		{
+			if (sender is ToolStripMenuItem item)
+			{
+				// Мы просто применяем состояние к форме.
+				this.TopMost = item.Checked;
+			}
+		}
+
+		private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			SetVisibility(true );
+			this.Activate();
+		}
+
+		private void tsmiShowDate_Click(object sender, EventArgs e)
+		{
+			//////////////////////////////////////////////////////
+			if (sender is ToolStripMenuItem item)
+			{
+				// Поскольку CheckOnClick имеет значение True,
+				// мы просто привязываем его к CheckBox.
+				checkBoxShowDate.Checked = item.Checked;
+			}
+
+		}
+
+		private void tsmiForegoundColor_Click(object sender, EventArgs e)
+		{
+			////////////////////////////////////////////////////
+			ColorDialog cd = new ColorDialog();
+			if (cd.ShowDialog() == DialogResult.OK)
+			{
+				labelTime.ForeColor = cd.Color;
+			}
+			////////////////////////////////////////////////////
+		}
+
+		private void tsmiBackgroundColor_Click(object sender, EventArgs e)
+		{
+			///////////////////////////////////////////////////////
+			ColorDialog cd = new ColorDialog();
+			if (cd.ShowDialog()==DialogResult.OK)
+			{
+				// Изменяет цвет всего окна  // Փոխում է ամբողջ պատուհանի գույնը
+				this.BackColor = cd.Color;  
+				// Это важно для корректной работы функции прозрачности.
+				if (this.FormBorderStyle == FormBorderStyle.None)
+					this.TransparencyKey = this.BackColor;
+			}
+		}
+		////////////////////////////////////////////
+		private void tsmiExit_Click(object sender, EventArgs e)
+		{
+			Application.Exit();
+		}
+		/////////////////////////////////////////////
 	}
 }
