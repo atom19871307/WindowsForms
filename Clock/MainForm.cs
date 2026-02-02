@@ -7,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//***********************************
+using System.Drawing.Text;
+using System.Runtime.InteropServices;
+using System.Linq.Expressions;
+//***********************************
 
 namespace Clock
 {
@@ -14,9 +19,15 @@ namespace Clock
 	{
 		ColorDialog backgroundDialog;
 		ColorDialog foregroundDialog;
+		//******************************************************
+		PrivateFontCollection pfc = new PrivateFontCollection();	// Տառատեսակի հավաքածու
+		Point lastPoint;              // Для перемещения окна       // Պատուհանը շարժելու համար
+	    //******************************************************
 		public MainForm()
 		{
 			InitializeComponent();
+			// 1. Вызов функции загрузки шрифта
+			InitCustomFont(); // ՍԱ ՊԱՐՏԱԴԻՐ Է
 			this.Location = new Point
 				(
 					Screen.PrimaryScreen.Bounds.Width - this.Width - 50,
@@ -25,6 +36,35 @@ namespace Clock
 			tsimShowControls.Checked = true;
 			backgroundDialog = new ColorDialog();
 			foregroundDialog = new ColorDialog();
+		}
+		// Функция для загрузки шрифта из ресурсов
+		private void InitCustomFont()
+		{// Получить шрифт из ресурсов
+			try
+			{ 
+		 // 1. Վերցնում ենք ֆայլը Resources-ից որպես byte array
+			byte[] fontData = Properties.Resources.DS_DIGIT;
+
+			// 2. Հատկացնում ենք հիշողություն տառատեսակի համար
+			IntPtr fontPtr = Marshal.AllocCoTaskMem(fontData.Length);
+			Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
+
+			// 3. Ավելացնում ենք մեր հավաքածուի մեջ
+			pfc.AddMemoryFont(fontPtr, fontData.Length);
+
+			// 4. Ազատում ենք հիշողությունը
+			Marshal.FreeCoTaskMem(fontPtr);
+				if (pfc.Families.Length > 0)
+				{
+					// Կիրառում ենք Label-ի վրա
+					labelTime.Font = new Font(pfc.Families[0], 40f, FontStyle.Regular);
+				}
+			}
+			catch (Exception ex)
+			{
+				// Եթե սխալ լինի, կտեսնես հաղորդագրություն
+				MessageBox.Show("Font error: " + ex.Message);
+			}
 		}
 
 		private void timer_Tick(object sender, EventArgs e)
@@ -50,6 +90,24 @@ namespace Clock
 			this.TransparencyKey = visible ? Color.Empty : this.BackColor;
 		}
 
+		//********************************************************************
+		// События перемещения окна (когда элементы управления скрыты)
+		private void labelTime_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				lastPoint = new Point(e.X, e.Y);
+			}
+		}
+		private void labelTime_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				this.Left += e.X - lastPoint.X;
+				this.Top += e.Y - lastPoint.Y;
+			}
+		}
+		//*******************************************************************
 		private void buttonHideControls_Click(object sender, EventArgs e) => tsimShowControls.Checked = false;
 		private void labelTime_DoubleClick(object sender, EventArgs e) => tsimShowControls.Checked = true;
 
@@ -70,18 +128,6 @@ namespace Clock
 			}
 		}
 
-		private void checkBoxShowDate_CheckedChanged(object sender, EventArgs e) =>
-			tsmiShowDate.Checked = (sender as CheckBox).Checked;
-
-		private void checkBoxShowWeekday_CheckedChanged(object sender, EventArgs e) =>
-			tsimShowWeekday.Checked = (sender as CheckBox).Checked;
-
-		private void tsmiShowDate_CheckedChanged(object sender, EventArgs e) =>
-			checkBoxShowDate.Checked = (sender as ToolStripMenuItem).Checked;
-
-		private void tsimShowWeekday_CheckedChanged(object sender, EventArgs e) =>
-			checkBoxShowWeekday.Checked = (sender as ToolStripMenuItem).Checked;
-
 		private void tsmiBackgroundColor_Click(object sender, EventArgs e)
 		{
 			DialogResult result = backgroundDialog.ShowDialog();
@@ -96,5 +142,9 @@ namespace Clock
 			if (foregroundDialog.ShowDialog() == DialogResult.OK)
 				labelTime.ForeColor = foregroundDialog.Color;
 		}
+		private void checkBoxShowDate_CheckedChanged(object sender, EventArgs e) => tsmiShowDate.Checked = (sender as CheckBox).Checked;
+		private void checkBoxShowWeekday_CheckedChanged(object sender, EventArgs e) => tsimShowWeekday.Checked = (sender as CheckBox).Checked;
+		private void tsmiShowDate_CheckedChanged(object sender, EventArgs e) => checkBoxShowDate.Checked = (sender as ToolStripMenuItem).Checked;
+		private void tsimShowWeekday_CheckedChanged(object sender, EventArgs e) =>checkBoxShowWeekday.Checked = (sender as ToolStripMenuItem).Checked;
 	}
 }
