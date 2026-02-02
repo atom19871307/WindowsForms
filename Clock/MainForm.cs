@@ -11,7 +11,8 @@ using System.Windows.Forms;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Linq.Expressions;
-//***********************************
+using Microsoft.Win32; // Սա պետք է լինի ֆայլի ամենավերևում
+					   //***********************************
 
 namespace Clock
 {
@@ -64,6 +65,19 @@ namespace Clock
 			{
 				// Եթե սխալ լինի, կտեսնես հաղորդագրություն
 				MessageBox.Show("Font error: " + ex.Message);
+			}
+		}
+		//********************************************************************
+		private void tsimAutorun_CheckedChanged(object sender, EventArgs e)
+		{// Բացում ենք ռեեստրի բանալին
+			RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+			if (tsmiAutorun.Checked)
+			{// Ավելացնում ենք ծրագիրը ավտոմատ միացման ցուցակում
+				rk.SetValue("MyCoolClack", Application.ExecutablePath);
+			}
+			else
+			{ // Հեռացնում ենք ցուցակից
+				rk.DeleteValue("MyCoolClack",false);
 			}
 		}
 
