@@ -68,8 +68,6 @@
 			this.labelTime.TabIndex = 0;
 			this.labelTime.Text = "CurrentTime";
 			this.labelTime.DoubleClick += new System.EventHandler(this.labelTime_DoubleClick);
-			this.labelTime.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseDown);
-			this.labelTime.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseMove);
 			// 
 			// contextMenuStrip
 			// 
@@ -106,7 +104,6 @@
 			this.tsimShowControls.Name = "tsimShowControls";
 			this.tsimShowControls.Size = new System.Drawing.Size(210, 24);
 			this.tsimShowControls.Text = "Show controls";
-			this.tsimShowControls.CheckedChanged += new System.EventHandler(this.tsimShowControls_CheckedChanged);
 			// 
 			// toolStripSeparator1
 			// 
@@ -127,7 +124,6 @@
 			this.tsimShowWeekday.Name = "tsimShowWeekday";
 			this.tsimShowWeekday.Size = new System.Drawing.Size(210, 24);
 			this.tsimShowWeekday.Text = "Show Weekday";
-			this.tsimShowWeekday.CheckedChanged += new System.EventHandler(this.tsimShowWeekday_CheckedChanged);
 			// 
 			// toolStripSeparator2
 			// 
@@ -139,6 +135,7 @@
 			this.tsimFont.Name = "tsimFont";
 			this.tsimFont.Size = new System.Drawing.Size(210, 24);
 			this.tsimFont.Text = "Font";
+			this.tsimFont.Click += new System.EventHandler(this.tsimFont_Click);
 			// 
 			// tsimColor
 			// 
@@ -185,7 +182,6 @@
 			this.tsmiAutorun.Name = "tsmiAutorun";
 			this.tsmiAutorun.Size = new System.Drawing.Size(210, 24);
 			this.tsmiAutorun.Text = "Autorun";
-			this.tsmiAutorun.CheckedChanged += new System.EventHandler(this.tsimAutorun_CheckedChanged);
 			// 
 			// toolStripSeparator5
 			// 

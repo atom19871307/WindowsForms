@@ -59,15 +59,5 @@ namespace Clock.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] DS_DIGIT {
-            get {
-                object obj = ResourceManager.GetObject("DS_DIGIT", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }
