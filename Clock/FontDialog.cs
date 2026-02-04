@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Drawing.Text;
 
 namespace Clock
 {
 	public partial class FontDialog : Form
 	{
 		MainForm parent;
+		PrivateFontCollection pfc = new PrivateFontCollection(); // Սա պետք է լինի այստեղ
+		public Font Font { get; private set; }
 		public FontDialog(MainForm parent)
 		{
 			InitializeComponent();
@@ -23,7 +26,7 @@ namespace Clock
 		}
 		void LoadFonts()
 		{
-			AllocConsole();
+			//AllocConsole();
 			Console.WriteLine(Application.ExecutablePath);
 			//Directory.SetCurrentDirectory($"{Application.ExecutablePath}");
 			Directory.SetCurrentDirectory($"{Application.ExecutablePath}\\..\\..\\..\\Fonts");
@@ -31,6 +34,7 @@ namespace Clock
 			Console.WriteLine(Directory.GetCurrentDirectory());
 			//LoadFonts(Directory.GetCurrentDirectory(), "*.otf");
 			//LoadFonts(Directory.GetCurrentDirectory(), "*.ttf");
+			Traverse(Directory.GetCurrentDirectory());
 		}
 		void LoadFonts(string path, string extension)
 		{
@@ -41,7 +45,6 @@ namespace Clock
 				files[i] = files[i].Split('\\').Last();
 			}
 			comboBoxFonts.Items.AddRange(files);
-
 		}
 		void Traverse(string path)
 		{
@@ -54,9 +57,9 @@ namespace Clock
 				Traverse(directories[i]);
 			}
 		}
-		[DllImport("keren32.dll")]
+		[DllImport("kernel32.dll")]
 		public static extern void AllocConsole();
-		[DllImport("kerne32.dll")]
+		[DllImport("kernel32.dll")]
 		public static extern void FreeConsole();
 
 		private void FontDialog_Load(object sender, EventArgs e)
@@ -67,6 +70,40 @@ namespace Clock
 				this.parent.Location.Y + 100
 				);
 			LoadFonts();
+		}
+
+		private void buttonOk_Click(object sender, EventArgs e)
+		{
+			this.Font = labelExample.Font; // labelExample-ի Font-ը արդեն ստեղծված է ApplyFontExemple-ում
+			this.DialogResult = DialogResult.OK; // Սա կարևոր է, որ MainForm-ը հասկանա՝ OK ես սեղմել
+			this.Close();
+			//this.Font = labelExample.Font;
+		}
+		void ApplyFontExemple()
+		{
+			if (comboBoxFonts.SelectedItem == null) return;
+
+			// ՀԱՐԿԱՎՈՐ Է ԳՏՆԵԼ ՖԱՅԼԻ ԼՐԻՎ ՀԱՍՑԵՆ (Full Path)
+			string fontName = comboBoxFonts.SelectedItem.ToString();
+			string fullPath = Path.Combine(Application.StartupPath, @"..\..\Fonts", fontName);
+
+			if (File.Exists(fullPath))
+			{
+				pfc.AddFontFile(fullPath);
+				labelExample.Font = new Font(pfc.Families[pfc.Families.Length - 1], (float)numericUpDownFontSize.Value);
+			}
+			////PrivateFontCollection pfc = new PrivateFontCollection();
+			//pfc.AddFontFile(comboBoxFonts.SelectedItem.ToString());
+			//labelExample.Font = new Font(pfc.Families[0],(float) numericUpDownFontSize.Value);
+		}
+		private void comboBoxFonts_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ApplyFontExemple();
+		}
+
+		private void numericUpDownFontSize_ValueChanged(object sender, EventArgs e)
+		{
+			ApplyFontExemple();
 		}
 	}
 }

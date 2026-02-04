@@ -33,7 +33,7 @@
 			this.labelTime = new System.Windows.Forms.Label();
 			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.tsmiTopmost = new System.Windows.Forms.ToolStripMenuItem();
-			this.tsimShowControls = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiShowControls = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmiShowDate = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsimShowWeekday = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,13 +68,15 @@
 			this.labelTime.TabIndex = 0;
 			this.labelTime.Text = "CurrentTime";
 			this.labelTime.DoubleClick += new System.EventHandler(this.labelTime_DoubleClick);
+			this.labelTime.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseDown);
+			this.labelTime.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseMove);
 			// 
 			// contextMenuStrip
 			// 
 			this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiTopmost,
-            this.tsimShowControls,
+            this.tsmiShowControls,
             this.toolStripSeparator1,
             this.tsmiShowDate,
             this.tsimShowWeekday,
@@ -88,7 +90,7 @@
             this.toolStripSeparator5,
             this.tsmiExit});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(211, 278);
+			this.contextMenuStrip.Size = new System.Drawing.Size(179, 250);
 			// 
 			// tsmiTopmost
 			// 
@@ -98,12 +100,14 @@
 			this.tsmiTopmost.Text = "Topmost";
 			this.tsmiTopmost.CheckedChanged += new System.EventHandler(this.tsmiTopmost_CheckedChanged);
 			// 
-			// tsimShowControls
+			// tsmiShowControls
 			// 
-			this.tsimShowControls.CheckOnClick = true;
-			this.tsimShowControls.Name = "tsimShowControls";
-			this.tsimShowControls.Size = new System.Drawing.Size(210, 24);
-			this.tsimShowControls.Text = "Show controls";
+			this.tsmiShowControls.CheckOnClick = true;
+			this.tsmiShowControls.Name = "tsmiShowControls";
+			this.tsmiShowControls.Size = new System.Drawing.Size(210, 24);
+			this.tsmiShowControls.Text = "Show controls";
+			this.tsmiShowControls.CheckedChanged += new System.EventHandler(this.tsmiShowControls_CheckedChanged);
+			this.tsmiShowControls.Click += new System.EventHandler(this.tsmiShowControls_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -124,6 +128,7 @@
 			this.tsimShowWeekday.Name = "tsimShowWeekday";
 			this.tsimShowWeekday.Size = new System.Drawing.Size(210, 24);
 			this.tsimShowWeekday.Text = "Show Weekday";
+			this.tsimShowWeekday.CheckedChanged += new System.EventHandler(this.tsmiShowWeekday_CheckedChanged);
 			// 
 			// toolStripSeparator2
 			// 
@@ -258,6 +263,8 @@
 			this.MinimizeBox = false;
 			this.Name = "MainForm";
 			this.Text = "ClockPV_522";
+			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseDown);
+			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseMove);
 			this.contextMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -274,7 +281,7 @@
 		private System.Windows.Forms.NotifyIcon notifyIcon;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem tsmiTopmost;
-		private System.Windows.Forms.ToolStripMenuItem tsimShowControls;
+		private System.Windows.Forms.ToolStripMenuItem tsmiShowControls;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem tsmiShowDate;
 		private System.Windows.Forms.ToolStripMenuItem tsimShowWeekday;

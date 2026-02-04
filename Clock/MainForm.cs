@@ -15,6 +15,7 @@ namespace Clock
 		ColorDialog backgroundDialog;
 		ColorDialog foregroundDialog;
 		FontDialog fontDialog;
+		Point lastPoint;
 		public MainForm()
 		{
 			InitializeComponent();
@@ -76,13 +77,16 @@ namespace Clock
 			tsmiShowDate.Checked = (sender as CheckBox).Checked;
 
 		private void checkBoxShowWeekday_CheckedChanged(object sender, EventArgs e) =>
-			tsmiShowWeekday.Checked = (sender as CheckBox).Checked;
+			tsimShowWeekday.Checked = (sender as CheckBox).Checked;
 
 		private void tsmiShowDate_CheckedChanged(object sender, EventArgs e) =>
 			checkBoxShowDate.Checked = (sender as ToolStripMenuItem).Checked;
 
 		private void tsmiShowWeekday_CheckedChanged(object sender, EventArgs e) =>
-			checkBoxShowWeekday.Checked = (sender as ToolStripMenuItem).Checked;
+			// Это привязывает кнопку меню к флажку.
+			// Սա կապում է մենյուի թռչնակը CheckBox-ի հետ
+			checkBoxShowWeekday.Checked = tsimShowWeekday.Checked;
+		
 
 		private void tsmiBackgroundColor_Click(object sender, EventArgs e)
 		{
@@ -98,12 +102,34 @@ namespace Clock
 			if (foregroundDialog.ShowDialog() == DialogResult.OK)
 				labelTime.ForeColor = foregroundDialog.Color;
 		}
-		
+
 		private void tsimFont_Click(object sender, EventArgs e)
 		{
 			if (fontDialog.ShowDialog() == DialogResult.OK)
 			{
 				labelTime.Font = fontDialog.Font;
+			}
+		}
+
+		private void tsmiShowControls_Click(object sender, EventArgs e)
+		{
+
+		}
+		private void labelTime_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				lastPoint = new Point(e.X, e.Y); // Հիշում ենք, թե որտեղ ենք սեղմել
+			}
+		}
+
+		private void labelTime_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				// Փոխում ենք պատուհանի դիրքը
+				this.Left += e.X - lastPoint.X;
+				this.Top += e.Y - lastPoint.Y;
 			}
 		}
 	}
