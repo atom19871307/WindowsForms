@@ -18,11 +18,14 @@ namespace Clock
 		MainForm parent;
 		PrivateFontCollection pfc = new PrivateFontCollection(); // Սա պետք է լինի այստեղ
 		public Font Font { get; private set; }
+		public string FontFile {  get;  set; }
+		Dictionary<string, string> fonts;
 		public FontDialog(MainForm parent)
 		{
 			InitializeComponent();
 			this.StartPosition = FormStartPosition.Manual;
 			this.parent = parent;
+			fonts = new Dictionary<string, string>();
 		}
 		void LoadFonts()
 		{
@@ -35,6 +38,7 @@ namespace Clock
 			//LoadFonts(Directory.GetCurrentDirectory(), "*.otf");
 			//LoadFonts(Directory.GetCurrentDirectory(), "*.ttf");
 			Traverse(Directory.GetCurrentDirectory());
+			comboBoxFonts.Items.AddRange(fonts.Keys.ToArray());
 		}
 		void LoadFonts(string path, string extension)
 		{
@@ -42,9 +46,9 @@ namespace Clock
 			for (int i = 0; i < files.Length; i++)
 			{
 				//Console.WriteLine(files[i]);
-				files[i] = files[i].Split('\\').Last();
+				//files[i] = files[i].Split('\\').Last();
+				fonts.Add(files[i].Split('\\').Last(), files[i]);
 			}
-			comboBoxFonts.Items.AddRange(files);
 		}
 		void Traverse(string path)
 		{
@@ -74,9 +78,11 @@ namespace Clock
 
 		private void buttonOk_Click(object sender, EventArgs e)
 		{
-			this.Font = labelExample.Font; // labelExample-ի Font-ը արդեն ստեղծված է ApplyFontExemple-ում
-			this.DialogResult = DialogResult.OK; // Սա կարևոր է, որ MainForm-ը հասկանա՝ OK ես սեղմել
-			this.Close();
+			this.Font = labelExample.Font; 
+			this.FontFile = fonts[comboBoxFonts.SelectedItem.ToString()];
+			// labelExample-ի Font-ը արդեն ստեղծված է ApplyFontExemple-ում
+			//this.DialogResult = DialogResult.OK; // Սա կարևոր է, որ MainForm-ը հասկանա՝ OK ես սեղմել
+			//this.Close();
 			//this.Font = labelExample.Font;
 		}
 		void ApplyFontExemple()
@@ -85,7 +91,8 @@ namespace Clock
 
 			// ՀԱՐԿԱՎՈՐ Է ԳՏՆԵԼ ՖԱՅԼԻ ԼՐԻՎ ՀԱՍՑԵՆ (Full Path)
 			string fontName = comboBoxFonts.SelectedItem.ToString();
-			string fullPath = Path.Combine(Application.StartupPath, @"..\..\Fonts", fontName);
+			//string fullPath = Path.Combine(Application.StartupPath, @"..\..\Fonts", fontName);
+			string fullPath = fonts[comboBoxFonts.SelectedItem.ToString()];
 
 			if (File.Exists(fullPath))
 			{
