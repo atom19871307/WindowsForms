@@ -90,7 +90,7 @@
             this.toolStripSeparator5,
             this.tsmiExit});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(179, 250);
+			this.contextMenuStrip.Size = new System.Drawing.Size(211, 278);
 			// 
 			// tsmiTopmost
 			// 
@@ -187,6 +187,7 @@
 			this.tsmiAutorun.Name = "tsmiAutorun";
 			this.tsmiAutorun.Size = new System.Drawing.Size(210, 24);
 			this.tsmiAutorun.Text = "Autorun";
+			this.tsmiAutorun.CheckedChanged += new System.EventHandler(this.tsmiAutorun_CheckedChanged);
 			// 
 			// toolStripSeparator5
 			// 
@@ -263,6 +264,7 @@
 			this.MinimizeBox = false;
 			this.Name = "MainForm";
 			this.Text = "ClockPV_522";
+			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseDown);
 			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseMove);
 			this.contextMenuStrip.ResumeLayout(false);

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace Clock
 {
@@ -131,6 +132,21 @@ namespace Clock
 				this.Left += e.X - lastPoint.X;
 				this.Top += e.Y - lastPoint.Y;
 			}
+		}
+
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+
+		}
+
+		private void tsmiAutorun_CheckedChanged(object sender, EventArgs e)
+		{
+			string key_name = "Clock_PV_522";
+			RegistryKey rk = Registry.CurrentUser.
+				OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+			if(tsmiAutorun.Checked) rk.SetValue(key_name, Application.ExecutablePath);
+			else rk.DeleteValue(key_name, false);
+			rk.Dispose();
 		}
 	}
 }
