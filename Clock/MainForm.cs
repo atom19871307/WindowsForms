@@ -132,5 +132,10 @@ namespace Clock
 				this.Top += e.Y - lastPoint.Y;
 			}
 		}
+
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+
+		}
 	}
 }
