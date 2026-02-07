@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
+using System.IO;    //Input/Output
 using System.Runtime.InteropServices;
 using System.Drawing.Text;
 
@@ -19,7 +19,7 @@ namespace Clock
 		MainForm parent;
 		Dictionary<string, string> fonts;
 		public Font Font { get; private set; }
-		public string FontFile {  get;  set; }
+		public string FontFile { get; set; }
 		public FontDialog(MainForm parent)
 		{
 			InitializeComponent();
@@ -44,12 +44,12 @@ namespace Clock
 		}
 		void LoadFonts(string path, string extension)
 		{
-			string[] files = Directory.GetFiles(path,extension);
+			string[] files = Directory.GetFiles(path, extension);
 			for (int i = 0; i < files.Length; i++)
 			{
 				//Console.WriteLine(files[i]);
 				//files[i] = files[i].Split('\\').Last();
-				fonts.Add(files[i].Split('\\').Last(), files[i]);
+				fonts.Add(files[i].Split('\\').Last()/*.Split('.').First()*/, files[i]);
 			}
 			//comboBoxFonts.Items.AddRange(files);
 		}
@@ -57,9 +57,9 @@ namespace Clock
 		{
 			LoadFonts(path, "*.ttf");
 			LoadFonts(path, "*.otf");
-			string[]directories = Directory.GetDirectories(path);
+			string[] directories = Directory.GetDirectories(path);
 			if (directories.Length == 0) return;
-			for (int i = 0;i < directories.Length;i++) 
+			for (int i = 0; i < directories.Length; i++)
 			{
 				Traverse(directories[i]);
 			}
@@ -73,19 +73,19 @@ namespace Clock
 		{
 			this.Location = new Point
 				(
-				this.parent.Location.X - this.Width/4,
-				this.parent.Location.Y + 100
+					this.parent.Location.X - this.Width / 4,
+					this.parent.Location.Y + 100
 				);
 			//LoadFonts();
 			//ApplyFontExample(FontFile);
 		}
 
-		private void buttonOk_Click(object sender, EventArgs e)
+		private void buttonOK_Click(object sender, EventArgs e)
 		{
-			this.Font = labelExample.Font; 
+			this.Font = labelExample.Font;
 			this.FontFile = fonts[comboBoxFonts.SelectedItem.ToString()];
 		}
-		public Font  ApplyFontExaemple(string filename)
+		public Font ApplyFontExample(string filename)
 		{
 			if (pfc != null) pfc.Dispose();
 			pfc = new PrivateFontCollection();
@@ -94,12 +94,12 @@ namespace Clock
 		}
 		private void comboBoxFonts_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ApplyFontExaemple(fonts[comboBoxFonts.SelectedItem.ToString()]);
+			ApplyFontExample(fonts[comboBoxFonts.SelectedItem.ToString()]);
 		}
 
 		private void numericUpDownFontSize_ValueChanged(object sender, EventArgs e)
 		{
-			ApplyFontExaemple(fonts[comboBoxFonts.SelectedItem.ToString()]);
+			ApplyFontExample(fonts[comboBoxFonts.SelectedItem.ToString()]);
 		}
 	}
 }

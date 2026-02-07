@@ -18,7 +18,6 @@ namespace Clock
 		ColorDialog backgroundDialog;
 		ColorDialog foregroundDialog;
 		FontDialog fontDialog;
-		Point lastPoint;
 		public MainForm()
 		{
 			InitializeComponent();
@@ -33,7 +32,6 @@ namespace Clock
 			fontDialog = new FontDialog(this);
 			LoadSettings();
 		}
-
 		void SaveSettings()
 		{
 			Directory.SetCurrentDirectory($"{Application.ExecutablePath}\\..\\..\\..");
@@ -49,7 +47,7 @@ namespace Clock
 			writer.WriteLine(fontDialog.FontFile);
 			writer.Close();
 			Process.Start("notepad", filename);
-				}
+		}
 		void LoadSettings()
 		{
 			Directory.SetCurrentDirectory($"{Application.ExecutablePath}\\..\\..\\..");
@@ -65,16 +63,15 @@ namespace Clock
 				labelTime.ForeColor = foregroundDialog.Color = Color.FromArgb(Convert.ToInt32(reader.ReadLine()));
 				//fontDialog = new FontDialog(this);
 				fontDialog.FontFile = reader.ReadLine();
-				labelTime.Font = fontDialog.ApplyFontExaemple(fontDialog.FontFile);
+				labelTime.Font = fontDialog.ApplyFontExample(fontDialog.FontFile);
 				reader.Close();
 			}
 			catch (Exception ex)
 			{
-
 				MessageBox.Show(this, ex.Message);
 			}
-
 		}
+
 		private void timer_Tick(object sender, EventArgs e)
 		{
 			labelTime.Text = DateTime.Now.ToString
@@ -128,10 +125,7 @@ namespace Clock
 			checkBoxShowDate.Checked = (sender as ToolStripMenuItem).Checked;
 
 		private void tsmiShowWeekday_CheckedChanged(object sender, EventArgs e) =>
-			// Это привязывает кнопку меню к флажку.
-			// Սա կապում է մենյուի թռչնակը CheckBox-ի հետ
-			checkBoxShowWeekday.Checked = tsimShowWeekday.Checked;
-		
+			checkBoxShowWeekday.Checked = (sender as ToolStripMenuItem).Checked;
 
 		private void tsmiBackgroundColor_Click(object sender, EventArgs e)
 		{
@@ -148,7 +142,7 @@ namespace Clock
 				labelTime.ForeColor = foregroundDialog.Color;
 		}
 
-		private void tsimFont_Click(object sender, EventArgs e)
+		private void tsmiFont_Click(object sender, EventArgs e)
 		{
 			if (fontDialog.ShowDialog() == DialogResult.OK)
 			{
@@ -156,40 +150,14 @@ namespace Clock
 			}
 		}
 
-		private void tsmiShowControls_Click(object sender, EventArgs e)
-		{
-
-		}
-		private void labelTime_MouseDown(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-			{
-				lastPoint = new Point(e.X, e.Y); // Հիշում ենք, թե որտեղ ենք սեղմել
-			}
-		}
-
-		private void labelTime_MouseMove(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-			{
-				// Փոխում ենք պատուհանի դիրքը
-				this.Left += e.X - lastPoint.X;
-				this.Top += e.Y - lastPoint.Y;
-			}
-		}
-
-		private void MainForm_Load(object sender, EventArgs e)
-		{
-
-		}
-
 		private void tsmiAutorun_CheckedChanged(object sender, EventArgs e)
 		{
 			string key_name = "Clock_PV_522";
 			RegistryKey rk = Registry.CurrentUser.
-				OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-			if(tsmiAutorun.Checked) rk.SetValue(key_name, Application.ExecutablePath);
+				OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);//true - открыть ветку на запись.
+			if (tsmiAutorun.Checked) rk.SetValue(key_name, Application.ExecutablePath);
 			else rk.DeleteValue(key_name, false);
+			//false - НЕ бросать исключение при отсутствии удаляемой ветки.
 			rk.Dispose();
 		}
 

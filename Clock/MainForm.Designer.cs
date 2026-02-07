@@ -68,8 +68,6 @@
 			this.labelTime.TabIndex = 0;
 			this.labelTime.Text = "CurrentTime";
 			this.labelTime.DoubleClick += new System.EventHandler(this.labelTime_DoubleClick);
-			this.labelTime.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseDown);
-			this.labelTime.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseMove);
 			// 
 			// contextMenuStrip
 			// 
@@ -107,7 +105,6 @@
 			this.tsmiShowControls.Size = new System.Drawing.Size(210, 24);
 			this.tsmiShowControls.Text = "Show controls";
 			this.tsmiShowControls.CheckedChanged += new System.EventHandler(this.tsmiShowControls_CheckedChanged);
-			this.tsmiShowControls.Click += new System.EventHandler(this.tsmiShowControls_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -140,10 +137,7 @@
 			this.tsimFont.Name = "tsimFont";
 			this.tsimFont.Size = new System.Drawing.Size(210, 24);
 			this.tsimFont.Text = "Font";
-			this.tsimFont.Click += new System.EventHandler(this.tsimFont_Click);
-			// 
-			// tsimColor
-			// 
+		
 			this.tsimColor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiForegoundColor,
             this.tsmiBackgroundColor});
@@ -265,9 +259,6 @@
 			this.Name = "MainForm";
 			this.Text = "ClockPV_522";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-			this.Load += new System.EventHandler(this.MainForm_Load);
-			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseDown);
-			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseMove);
 			this.contextMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
