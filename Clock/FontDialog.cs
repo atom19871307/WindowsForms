@@ -15,17 +15,19 @@ namespace Clock
 {
 	public partial class FontDialog : Form
 	{
+		PrivateFontCollection pfc;
 		MainForm parent;
-		PrivateFontCollection pfc = new PrivateFontCollection(); // Սա պետք է լինի այստեղ
+		Dictionary<string, string> fonts;
 		public Font Font { get; private set; }
 		public string FontFile {  get;  set; }
-		Dictionary<string, string> fonts;
 		public FontDialog(MainForm parent)
 		{
 			InitializeComponent();
+			pfc = null;
+			fonts = new Dictionary<string, string>();
 			this.StartPosition = FormStartPosition.Manual;
 			this.parent = parent;
-			fonts = new Dictionary<string, string>();
+			LoadFonts();
 		}
 		void LoadFonts()
 		{
@@ -49,6 +51,7 @@ namespace Clock
 				//files[i] = files[i].Split('\\').Last();
 				fonts.Add(files[i].Split('\\').Last(), files[i]);
 			}
+			//comboBoxFonts.Items.AddRange(files);
 		}
 		void Traverse(string path)
 		{
@@ -73,44 +76,30 @@ namespace Clock
 				this.parent.Location.X - this.Width/4,
 				this.parent.Location.Y + 100
 				);
-			LoadFonts();
+			//LoadFonts();
+			//ApplyFontExample(FontFile);
 		}
 
 		private void buttonOk_Click(object sender, EventArgs e)
 		{
 			this.Font = labelExample.Font; 
 			this.FontFile = fonts[comboBoxFonts.SelectedItem.ToString()];
-			// labelExample-ի Font-ը արդեն ստեղծված է ApplyFontExemple-ում
-			//this.DialogResult = DialogResult.OK; // Սա կարևոր է, որ MainForm-ը հասկանա՝ OK ես սեղմել
-			//this.Close();
-			//this.Font = labelExample.Font;
 		}
-		void ApplyFontExemple()
+		public Font  ApplyFontExaemple(string filename)
 		{
-			if (comboBoxFonts.SelectedItem == null) return;
-
-			// ՀԱՐԿԱՎՈՐ Է ԳՏՆԵԼ ՖԱՅԼԻ ԼՐԻՎ ՀԱՍՑԵՆ (Full Path)
-			string fontName = comboBoxFonts.SelectedItem.ToString();
-			//string fullPath = Path.Combine(Application.StartupPath, @"..\..\Fonts", fontName);
-			string fullPath = fonts[comboBoxFonts.SelectedItem.ToString()];
-
-			if (File.Exists(fullPath))
-			{
-				pfc.AddFontFile(fullPath);
-				labelExample.Font = new Font(pfc.Families[pfc.Families.Length - 1], (float)numericUpDownFontSize.Value);
-			}
-			////PrivateFontCollection pfc = new PrivateFontCollection();
-			//pfc.AddFontFile(comboBoxFonts.SelectedItem.ToString());
-			//labelExample.Font = new Font(pfc.Families[0],(float) numericUpDownFontSize.Value);
+			if (pfc != null) pfc.Dispose();
+			pfc = new PrivateFontCollection();
+			pfc.AddFontFile(filename);
+			return labelExample.Font = new Font(pfc.Families[0], (float)numericUpDownFontSize.Value);
 		}
 		private void comboBoxFonts_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ApplyFontExemple();
+			ApplyFontExaemple(fonts[comboBoxFonts.SelectedItem.ToString()]);
 		}
 
 		private void numericUpDownFontSize_ValueChanged(object sender, EventArgs e)
 		{
-			ApplyFontExemple();
+			ApplyFontExaemple(fonts[comboBoxFonts.SelectedItem.ToString()]);
 		}
 	}
 }
