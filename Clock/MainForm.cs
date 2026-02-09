@@ -63,7 +63,7 @@ namespace Clock
 					Convert.ToInt16(location.Split('x').First()),
 					Convert.ToInt16(location.Split('x').Last())
 					);
-			//	tsmiTopmost.Checked = bool.Parse(topmost);
+				tsmiTopmost.Checked = bool.Parse(reader.ReadLine());
 				tsmiShowControls.Checked = bool.Parse(reader.ReadLine());
 				tsmiShowDate.Checked = bool.Parse(reader.ReadLine());
 				tsimShowWeekday.Checked = bool.Parse(reader.ReadLine());
