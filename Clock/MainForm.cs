@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +29,58 @@ namespace Clock
 			tsmiShowControls.Checked = true;
 			backgroundDialog = new ColorDialog();
 			foregroundDialog = new ColorDialog();
-			fontDialog = new FontDialog(this);
+			fontDialog = new FontDialog(this, "");
+		}
+		void SaveSettings()
+		{
+			Directory.SetCurrentDirectory($"{Application.ExecutablePath}\\..\\..\\..");
+			string filename = "Settings.ini";
+			StreamWriter writer = new StreamWriter(filename);
+			writer.WriteLine($"{this.Location.X}x{this.Location.Y}");
+			writer.WriteLine(tsmiTopmost.Checked);
+			writer.WriteLine(tsmiShowControls.Checked);
+			writer.WriteLine(tsmiShowDate.Checked);
+			writer.WriteLine(tsimShowWeekday.Checked);
+			writer.WriteLine(tsmiAutorun.Checked);
+			writer.WriteLine(labelTime.BackColor.ToArgb());
+			writer.WriteLine(labelTime.ForeColor.ToArgb());
+			writer.WriteLine(fontDialog.FontFile);
+			writer.WriteLine(fontDialog.FontSize);
+			writer.Close();
+			Process.Start("notepad", filename);
+		}
+		void LoadSettings()
+		{
+			Directory.SetCurrentDirectory($"{Application.ExecutablePath}\\..\\..\\..");
+			StreamReader reader = null;
+			try
+			{
+				reader = new StreamReader("Settings.ini");
+				string location = reader.ReadLine();
+				this.Location = new Point
+					(
+					Convert.ToInt16(location.Split('x').First()),
+					Convert.ToInt16(location.Split('x').Last())
+					);
+				tsmiTopmost.Checked = bool.Parse(reader.ReadLine());
+				tsmiShowControls.Checked = bool.Parse(reader.ReadLine());
+				tsmiShowDate.Checked = bool.Parse(reader.ReadLine());
+				tsimShowWeekday.Checked = bool.Parse(reader.ReadLine());
+				tsmiAutorun.Checked = bool.Parse(reader.ReadLine());
+				labelTime.BackColor = backgroundDialog.Color = Color.FromArgb(Convert.ToInt32(reader.ReadLine()));
+				labelTime.ForeColor = foregroundDialog.Color = Color.FromArgb(Convert.ToInt32(reader.ReadLine()));
+				//fontDialog = new FontDialog(this);
+				//fontDialog.FontFile = reader.ReadLine();
+				fontDialog = new FontDialog(this, reader.ReadLine());
+				fontDialog.FontSize = (float)Convert.ToDouble(reader.ReadLine());
+				labelTime.Font = fontDialog.ApplyFontExample(fontDialog.FontFile);
+				reader.Close();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(this, ex.Message);
+			}
+			if (reader != null) reader.Close();
 		}
 
 		private void timer_Tick(object sender, EventArgs e)
@@ -135,7 +188,12 @@ namespace Clock
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
+			LoadSettings();
+		}
 
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			SaveSettings();
 		}
 	}
 }

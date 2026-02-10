@@ -263,6 +263,7 @@
 			this.MinimizeBox = false;
 			this.Name = "MainForm";
 			this.Text = "ClockPV_522";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseDown);
 			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTime_MouseMove);
