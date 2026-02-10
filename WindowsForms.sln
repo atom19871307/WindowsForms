@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36717.8 d17.14
+VisualStudioVersion = 17.14.36717.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clock", "Clock\Clock.csproj", "{7C31B231-E3E4-4DC5-97FE-7490A4D3E0B6}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ClockInstaller", "ClockInstaller\ClockInstaller.vdproj", "{1E6D21C7-1593-BC78-4D5E-CC0E690B1B5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,8 @@ Global
 		{7C31B231-E3E4-4DC5-97FE-7490A4D3E0B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C31B231-E3E4-4DC5-97FE-7490A4D3E0B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C31B231-E3E4-4DC5-97FE-7490A4D3E0B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6D21C7-1593-BC78-4D5E-CC0E690B1B5C}.Debug|Any CPU.ActiveCfg = Debug
+		{1E6D21C7-1593-BC78-4D5E-CC0E690B1B5C}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
