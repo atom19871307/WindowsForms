@@ -153,6 +153,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_EC44136056E249E9BE2FDC49591B8F99"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F33593B03DFE4A1A9032816A8D57F735"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -232,6 +238,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -713,6 +727,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EC44136056E249E9BE2FDC49591B8F99"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Desktop\\Ярличок\\clock_22738 (1).ico"
+            "TargetName" = "8:clock.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B586062F080748ECA7F895B8F9C1AF36"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F33593B03DFE4A1A9032816A8D57F735"
             {
             "SourcePath" = "8:..\\Clock\\Fonts\\DS-DIGIB.TTF"
@@ -776,6 +810,17 @@
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
                     "Property" = "8:_5FA80CFCFE4C43099BE8014FDEA56C3C"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_B586062F080748ECA7F895B8F9C1AF36"
+                    {
+                    "Name" = "8:icon"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_1D563CA24DED47E6857C29DAFDE24C0C"
                         "Folders"
                         {
                         }
@@ -971,7 +1016,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4E445AAFAFA441E599B241735510A523"
             {
-            "Name" = "8:Shortcut to %sclock_22738 (1).ico"
+            "Name" = "8:clock.ico"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -981,20 +1026,6 @@
             "Folder" = "8:_C38C487627674592BCB9149B09AB4519"
             "WorkingFolder" = "8:_798EF9C9E8084E09AA332A36D83B3FA9"
             "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9360AEFA46E947AFA43ECF0ECBF773DB"
-            {
-            "Name" = "8:Shortcut to %sPrimary output from Clock (Active)"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_A5C419AF49664DC8A26D047CC80EE178"
-            "Folder" = "8:_C38C487627674592BCB9149B09AB4519"
-            "WorkingFolder" = "8:_798EF9C9E8084E09AA332A36D83B3FA9"
-            "Icon" = "8:_7BDC2684956D4726AA6CC5F4646245F9"
             "Feature" = "8:"
             }
         }
